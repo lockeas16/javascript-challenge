@@ -1,7 +1,16 @@
+// grid definition
+var movementGrid = {
+// grid starts at 0 
+  limitX: 9,
+  limitY: 9
+};
+
 // rover definition
 var rover = {
   // default direction: North
-  direction: "N"
+  direction: "N",
+  positionX: 0,
+  positionY: 0
 };
 
 
@@ -62,11 +71,54 @@ function turnRight(rover){
   
     default:
       msg="Invalid direction!";
-    }
+    };
     console.log(msg);
     return rover.direction;
 }
 
-function moveForward(rover){
-  console.log("moveForward was called");
+function moveForward(rover, movementGrid){
+  var msg="moveForward was called";
+  switch (rover.direction) {
+//  Decrement Y position (it moves one square up)
+    case "N":
+      if (rover.positionY > 0){
+        rover.positionY--;
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+  
+//  Increment X position (it moves one square right)
+    case "E":
+      if (rover.positionX < movementGrid.limitX){
+        rover.positionX++;
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+  
+//  Increment Y position (it moves one square down)
+    case "S":
+      if (rover.positionY < movementGrid.limitY){
+        rover.positionY++;
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+  
+//  Decrement X position (it moves one square left)
+    case "W":
+      if (rover.positionX > 0){
+        rover.positionX--;
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+  
+    default:
+      msg="Invalid direction!";
+  };
+
+  console.log(msg);
+  return "Current position: [" + rover.positionX + "," + rover.positionY + "]";
 }
