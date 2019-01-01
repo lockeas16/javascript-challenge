@@ -2,7 +2,20 @@
 var movementGrid = {
 // grid starts at 0 
   limitX: 9,
-  limitY: 9
+  limitY: 9,
+// value X represents an obstacle  
+  grid: [
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, "X" , null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
+  ]
 };
 
 // rover definition
@@ -80,7 +93,7 @@ function turnRight(rover){
 function moveForward(rover, movementGrid){
   var msg="moveForward was called";
   switch (rover.direction) {
-//  Decrement Y position (it moves one square up)
+    //  Decrement Y position (it moves one square up)
     case "N":
       if (rover.positionY > 0){
         rover.positionY--;
@@ -90,8 +103,8 @@ function moveForward(rover, movementGrid){
       };
       break;
       
-      //  Increment X position (it moves one square right)
-      case "E":
+    //  Increment X position (it moves one square right)
+    case "E":
       if (rover.positionX < movementGrid.limitX){
         rover.positionX++;
         logPosition(rover);
@@ -100,8 +113,8 @@ function moveForward(rover, movementGrid){
       };
       break;
       
-      //  Increment Y position (it moves one square down)
-      case "S":
+    //  Increment Y position (it moves one square down)
+    case "S":
       if (rover.positionY < movementGrid.limitY){
         rover.positionY++;
         logPosition(rover);
@@ -110,10 +123,61 @@ function moveForward(rover, movementGrid){
       };
       break;
       
-      //  Decrement X position (it moves one square left)
-      case "W":
+    //  Decrement X position (it moves one square left)
+    case "W":
       if (rover.positionX > 0){
         rover.positionX--;
+        logPosition(rover);
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+  
+    default:
+      msg="Invalid direction!";
+  };
+
+  console.log(msg);
+  return "Current position: [" + rover.positionX + "," + rover.positionY + "]";
+}
+
+function moveBackward(rover, movementGrid){
+  var msg="moveBackward was called";
+  switch (rover.direction) {
+    //  Increment Y position (it moves one square down)
+    case "N":
+      if (rover.positionY < movementGrid.limitY){
+        rover.positionY++;
+        logPosition(rover);
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+      
+    //  Decrement X position (it moves one square left)
+    case "E":
+      if (rover.positionX > 0){
+        rover.positionX--;
+        logPosition(rover);
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+      
+    //  Decrement Y position (it moves one square up)
+    case "S":
+      if (rover.positionY > 0){
+        rover.positionY--;
+        logPosition(rover);
+      }else{
+        msg="movement not possible, off-limits!";
+      };
+      break;
+      
+    //  Increment X position (it moves one square right)
+    case "W":
+      if (rover.positionX < movementGrid.limitX){
+        rover.positionX++;
         logPosition(rover);
       }else{
         msg="movement not possible, off-limits!";
@@ -135,6 +199,12 @@ function commandRover(rover, movementGrid, directions){
        case "f":
        case "F":
          moveForward(rover,movementGrid);
+         break;
+
+//     action requested: Move Backward
+       case "b":
+       case "B":
+         moveBackward(rover,movementGrid);
          break;
 
 //     action requested: Turn Left
