@@ -10,7 +10,8 @@ var rover = {
   // default direction: North
   direction: "N",
   positionX: 0,
-  positionY: 0
+  positionY: 0,
+  travelLog: []
 };
 
 
@@ -83,33 +84,37 @@ function moveForward(rover, movementGrid){
     case "N":
       if (rover.positionY > 0){
         rover.positionY--;
+        logPosition(rover);
       }else{
         msg="movement not possible, off-limits!";
       };
       break;
-  
-//  Increment X position (it moves one square right)
-    case "E":
+      
+      //  Increment X position (it moves one square right)
+      case "E":
       if (rover.positionX < movementGrid.limitX){
         rover.positionX++;
+        logPosition(rover);
       }else{
         msg="movement not possible, off-limits!";
       };
       break;
-  
-//  Increment Y position (it moves one square down)
-    case "S":
+      
+      //  Increment Y position (it moves one square down)
+      case "S":
       if (rover.positionY < movementGrid.limitY){
         rover.positionY++;
+        logPosition(rover);
       }else{
         msg="movement not possible, off-limits!";
       };
       break;
-  
-//  Decrement X position (it moves one square left)
-    case "W":
+      
+      //  Decrement X position (it moves one square left)
+      case "W":
       if (rover.positionX > 0){
         rover.positionX--;
+        logPosition(rover);
       }else{
         msg="movement not possible, off-limits!";
       };
@@ -153,4 +158,17 @@ function commandRover(rover, movementGrid, directions){
 
 function getroverPosition(rover){
   return "Current position: [" + rover.positionX + "," + rover.positionY + "]";
+}
+
+function logPosition(rover){
+  var logStatus = "[" + rover.positionX + "," + rover.positionY + "]";
+  rover.travelLog.push(logStatus);
+}
+
+function gettravelLog(rover){
+// for each cycle to loop through array
+  rover.travelLog.forEach(function (logStatus, index) {
+    var msg = index + ".- " + "Position:" + logStatus;
+    console.log(msg);
+  });
 }
