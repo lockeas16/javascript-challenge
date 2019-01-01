@@ -122,3 +122,35 @@ function moveForward(rover, movementGrid){
   console.log(msg);
   return "Current position: [" + rover.positionX + "," + rover.positionY + "]";
 }
+
+function commandRover(rover, movementGrid, directions){
+   for (let gridIndex = 0; gridIndex < directions.length; gridIndex++) {
+     switch (directions[gridIndex]) {
+//     action requested: Move Forward
+       case "f":
+       case "F":
+         moveForward(rover,movementGrid);
+         break;
+
+//     action requested: Turn Left
+       case "l":
+       case "L":
+         turnLeft(rover);
+         break;
+         
+//     action requested: Turn Right
+       case "r":
+       case "R":
+         turnRight(rover);
+         break;
+
+//     dont do anything and continue with the next command
+       default:
+         break;
+     }; // switch end
+   }; //for end
+}
+
+function getroverPosition(rover){
+  return "Current position: [" + rover.positionX + "," + rover.positionY + "]";
+}
